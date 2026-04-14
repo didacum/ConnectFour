@@ -1,10 +1,12 @@
 package com.example.connectfour.view
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -53,44 +55,51 @@ fun GameScreenContent(
     Column(
         modifier = modifier
             .fillMaxSize()
-            .background(BackgroundDark)
-            .padding(top = 24.dp)
+            .background(BackgroundDark),
+        verticalArrangement = Arrangement.SpaceBetween
     ) {
-        // Title
-        Text(
-            text = "Connect Four",
-            fontSize = 28.sp,
-            fontWeight = FontWeight.Bold,
-            color = TextPrimary,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 16.dp),
-            textAlign = TextAlign.Center
-        )
+        // Top section: Title, Scores, Turn indicator
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalAlignment = androidx.compose.ui.Alignment.CenterHorizontally
+        ) {
+            Spacer(modifier = Modifier.weight(1.5f))
 
-        // Score row
-        ScoreView(
-            redWins = uiState.redWins,
-            yellowWins = uiState.yellowWins,
-            currentPlayer = uiState.currentPlayer
-        )
+            // Title
+            Text(
+                text = "Connect Four",
+                fontSize = 28.sp,
+                fontWeight = FontWeight.Bold,
+                color = TextPrimary,
+                textAlign = TextAlign.Center
+            )
 
-        // Turn indicator
-        TurnIndicatorView(
-            currentPlayer = uiState.currentPlayer
-        )
+            Spacer(modifier = Modifier.height(12.dp))
 
-        // Spacer to push board to center/lower area
-        Spacer(modifier = Modifier.weight(1f, fill = true))
+            // Score row
+            ScoreView(
+                redWins = uiState.redWins,
+                yellowWins = uiState.yellowWins,
+                currentPlayer = uiState.currentPlayer
+            )
 
-        // Board
+            Spacer(modifier = Modifier.height(8.dp))
+
+            // Turn indicator
+            TurnIndicatorView(
+                currentPlayer = uiState.currentPlayer
+            )
+
+            Spacer(modifier = Modifier.weight(1f))
+        }
+
+        // Board in the center
         BoardView(
             board = uiState.board,
             onColumnClick = onDropPiece
         )
 
-        // Spacer
-        Spacer(modifier = Modifier.weight(1f, fill = true))
+        Spacer(modifier = Modifier.weight(0.6f))
 
         // Controls at bottom
         ControlsView(
