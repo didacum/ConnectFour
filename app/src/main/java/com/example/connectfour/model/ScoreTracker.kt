@@ -12,6 +12,10 @@ class ScoreTracker {
         gamesPlayed++
     }
 
+    fun incrementGamesPlayed() {
+        gamesPlayed++
+    }
+
     fun resetScores() {
         scores[Player.RED] = 0
         scores[Player.YELLOW] = 0
