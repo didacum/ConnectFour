@@ -56,66 +56,74 @@ fun GameScreenContent(
         modifier = modifier
             .fillMaxSize()
             .background(BackgroundDark),
-        verticalArrangement = Arrangement.SpaceBetween
+        horizontalAlignment = androidx.compose.ui.Alignment.CenterHorizontally
     ) {
-        // Top section: Title, Scores, Turn indicator
-        Column(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalAlignment = androidx.compose.ui.Alignment.CenterHorizontally
-        ) {
-            Spacer(modifier = Modifier.weight(1.5f))
+        // Large top spacer — room for camera notch
+        Spacer(modifier = Modifier.weight(1.5f))
 
-            // Title
-            Text(
-                text = "Connect Four",
-                fontSize = 28.sp,
-                fontWeight = FontWeight.Bold,
-                color = TextPrimary,
-                textAlign = TextAlign.Center
-            )
-
-            Spacer(modifier = Modifier.height(12.dp))
-
-            // Score row
-            ScoreView(
-                redWins = uiState.redWins,
-                yellowWins = uiState.yellowWins,
-                currentPlayer = uiState.currentPlayer
-            )
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-            // Turn indicator
-            TurnIndicatorView(
-                currentPlayer = uiState.currentPlayer
-            )
-
-            Spacer(modifier = Modifier.weight(1f))
-        }
-
-        // Board in the center
-        BoardView(
-            board = uiState.board,
-            onColumnClick = onDropPiece
+        // Title
+        Text(
+            text = "Connect Four",
+            fontSize = 28.sp,
+            fontWeight = FontWeight.Bold,
+            color = TextPrimary,
+            textAlign = TextAlign.Center
         )
 
+        Spacer(modifier = Modifier.height(12.dp))
+
+        // Score cards
+        ScoreView(
+            redWins = uiState.redWins,
+            yellowWins = uiState.yellowWins,
+            currentPlayer = uiState.currentPlayer,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp)
+        )
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        // Turn indicator
+        TurnIndicatorView(
+            currentPlayer = uiState.currentPlayer,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 24.dp)
+        )
+
+        // Moderate spacer between turn indicator and board
+        Spacer(modifier = Modifier.weight(1f))
+
+        // Board
+        BoardView(
+            board = uiState.board,
+            onColumnClick = onDropPiece,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp)
+        )
+
+        // Small spacer between board and buttons — keeps them close
         Spacer(modifier = Modifier.weight(0.6f))
 
-        // Controls at bottom
+        // Controls
         ControlsView(
             onRestart = onResetGame,
             onResetScores = onResetScores,
-            modifier = Modifier.padding(bottom = 24.dp)
+            modifier = Modifier.fillMaxWidth()
         )
 
-        // Winner dialog ( conditionally shown)
-        if (uiState.gameState != GameState.PLAYING) {
-            WinnerDialogView(
-                gameState = uiState.gameState,
-                winner = uiState.winner,
-                onDismiss = onResetGame
-            )
-        }
+        Spacer(modifier = Modifier.height(24.dp))
+    }
+
+    // Winner dialog — shown on top when game ends
+    if (uiState.gameState != GameState.PLAYING) {
+        WinnerDialogView(
+            gameState = uiState.gameState,
+            winner = uiState.winner,
+            onDismiss = onResetGame
+        )
     }
 }
 
