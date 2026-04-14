@@ -18,7 +18,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.tooling.preview.Preview
 import com.example.connectfour.model.Player
+import com.example.connectfour.ui.theme.ConnectFourTheme
 import com.example.connectfour.ui.theme.PlayerRed
 import com.example.connectfour.ui.theme.PlayerYellow
 import com.example.connectfour.ui.theme.TextPrimary
@@ -55,5 +57,21 @@ fun TurnIndicatorView(
             fontWeight = FontWeight.Bold,
             color = textColor
         )
+    }
+}
+
+@Preview(name = "TurnIndicator — Red turn")
+@Composable
+private fun TurnIndicatorViewPreview1() {
+    ConnectFourTheme {
+        TurnIndicatorView(currentPlayer = Player.RED)
+    }
+}
+
+@Preview(name = "TurnIndicator — Yellow turn")
+@Composable
+private fun TurnIndicatorViewPreview2() {
+    ConnectFourTheme {
+        TurnIndicatorView(currentPlayer = Player.YELLOW)
     }
 }

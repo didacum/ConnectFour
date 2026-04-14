@@ -19,10 +19,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.connectfour.model.Board
 import com.example.connectfour.model.CellState
+import com.example.connectfour.model.Player
 import com.example.connectfour.ui.theme.BoardBlue
+import com.example.connectfour.ui.theme.ConnectFourTheme
 import com.example.connectfour.ui.theme.CellEmpty
 import com.example.connectfour.ui.theme.PlayerRed
 import com.example.connectfour.ui.theme.PlayerYellow
@@ -77,5 +80,38 @@ fun BoardView(
                 }
             }
         }
+    }
+}
+
+@Preview(name = "BoardView — Empty")
+@Composable
+private fun BoardViewPreview1() {
+    ConnectFourTheme {
+        BoardView(
+            board = Board.empty(),
+            onColumnClick = {}
+        )
+    }
+}
+
+@Preview(name = "BoardView — Mid game")
+@Composable
+private fun BoardViewPreview2() {
+    ConnectFourTheme {
+        val board = Board.empty()
+            .dropPiece(0, Player.RED)
+            .dropPiece(1, Player.YELLOW)
+            .dropPiece(1, Player.RED)
+            .dropPiece(2, Player.YELLOW)
+            .dropPiece(2, Player.RED)
+            .dropPiece(2, Player.YELLOW)
+            .dropPiece(3, Player.RED)
+            .dropPiece(3, Player.YELLOW)
+            .dropPiece(3, Player.RED)
+            .dropPiece(4, Player.YELLOW)
+        BoardView(
+            board = board,
+            onColumnClick = {}
+        )
     }
 }

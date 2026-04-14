@@ -15,9 +15,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.connectfour.model.Board
 import com.example.connectfour.model.GameState
+import com.example.connectfour.model.Player
 import com.example.connectfour.ui.theme.BackgroundDark
+import com.example.connectfour.ui.theme.ConnectFourTheme
 import com.example.connectfour.ui.theme.TextPrimary
 import com.example.connectfour.viewmodel.GameViewModel
 import com.example.connectfour.viewmodel.UiState
@@ -31,18 +35,18 @@ fun GameScreen(
 
     GameScreenContent(
         uiState = uiState,
-        onColumnClick = { column -> viewModel.dropPiece(column) },
-        onRestart = { viewModel.resetGame() },
+        onDropPiece = { column -> viewModel.dropPiece(column) },
+        onResetGame = { viewModel.resetGame() },
         onResetScores = { viewModel.resetScores() },
         modifier = modifier
     )
 }
 
 @Composable
-private fun GameScreenContent(
+fun GameScreenContent(
     uiState: UiState,
-    onColumnClick: (Int) -> Unit,
-    onRestart: () -> Unit,
+    onDropPiece: (Int) -> Unit,
+    onResetGame: () -> Unit,
     onResetScores: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -82,7 +86,7 @@ private fun GameScreenContent(
         // Board
         BoardView(
             board = uiState.board,
-            onColumnClick = onColumnClick
+            onColumnClick = onDropPiece
         )
 
         // Spacer
@@ -90,7 +94,7 @@ private fun GameScreenContent(
 
         // Controls at bottom
         ControlsView(
-            onRestart = onRestart,
+            onRestart = onResetGame,
             onResetScores = onResetScores,
             modifier = Modifier.padding(bottom = 24.dp)
         )
@@ -100,8 +104,57 @@ private fun GameScreenContent(
             WinnerDialogView(
                 gameState = uiState.gameState,
                 winner = uiState.winner,
-                onDismiss = onRestart
+                onDismiss = onResetGame
             )
         }
+    }
+}
+
+@Preview(name = "GameScreen — Initial")
+@Composable
+private fun GameScreenPreview1() {
+    ConnectFourTheme {
+        GameScreenContent(
+            uiState = UiState.initial(),
+            onDropPiece = {},
+            onResetGame = {},
+            onResetScores = {}
+        )
+    }
+}
+
+@Preview(name = "GameScreen — Mid game")
+@Composable
+private fun GameScreenPreview2() {
+    ConnectFourTheme {
+        val board = Board.empty()
+            .dropPiece(0, Player.RED)
+            .dropPiece(1, Player.YELLOW)
+            .dropPiece(1, Player.RED)
+            .dropPiece(2, Player.YELLOW)
+            .dropPiece(2, Player.RED)
+            .dropPiece(2, Player.YELLOW)
+            .dropPiece(3, Player.RED)
+            .dropPiece(3, Player.YELLOW)
+            .dropPiece(3, Player.RED)
+            .dropPiece(4, Player.YELLOW)
+
+        val uiState = UiState(
+            board = board,
+            currentPlayer = Player.RED,
+            gameState = GameState.PLAYING,
+            winner = null,
+            nextFirstPlayer = Player.YELLOW,
+            redWins = 2,
+            yellowWins = 1,
+            gamesPlayed = 3
+        )
+
+        GameScreenContent(
+            uiState = uiState,
+            onDropPiece = {},
+            onResetGame = {},
+            onResetScores = {}
+        )
     }
 }

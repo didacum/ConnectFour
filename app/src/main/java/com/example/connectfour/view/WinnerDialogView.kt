@@ -7,9 +7,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import com.example.connectfour.model.GameState
 import com.example.connectfour.model.Player
+import com.example.connectfour.ui.theme.ConnectFourTheme
 import com.example.connectfour.ui.theme.ScoreCardBackground
 import com.example.connectfour.ui.theme.TextPrimary
 
@@ -71,4 +73,28 @@ fun WinnerDialogView(
         titleContentColor = TextPrimary,
         textContentColor = TextPrimary
     )
+}
+
+@Preview(name = "WinnerDialog — Player 1 wins")
+@Composable
+private fun WinnerDialogViewPreview1() {
+    ConnectFourTheme {
+        WinnerDialogView(
+            gameState = GameState.WON,
+            winner = Player.RED,
+            onDismiss = {}
+        )
+    }
+}
+
+@Preview(name = "WinnerDialog — Draw")
+@Composable
+private fun WinnerDialogViewPreview2() {
+    ConnectFourTheme {
+        WinnerDialogView(
+            gameState = GameState.DRAW,
+            winner = null,
+            onDismiss = {}
+        )
+    }
 }
