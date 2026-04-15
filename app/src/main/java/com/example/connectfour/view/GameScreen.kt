@@ -1,6 +1,7 @@
 package com.example.connectfour.view
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.snapping.SnapPosition
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -12,6 +13,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -59,7 +61,7 @@ fun GameScreenContent(
         horizontalAlignment = androidx.compose.ui.Alignment.CenterHorizontally
     ) {
         // Large top spacer — room for camera notch
-        Spacer(modifier = Modifier.weight(1.5f))
+        Spacer(modifier = Modifier.weight(0.7f))
 
         // Title
         Text(
@@ -88,12 +90,11 @@ fun GameScreenContent(
         TurnIndicatorView(
             currentPlayer = uiState.currentPlayer,
             modifier = Modifier
-                .fillMaxWidth()
                 .padding(horizontal = 24.dp)
         )
 
         // Moderate spacer between turn indicator and board
-        Spacer(modifier = Modifier.weight(1f))
+        Spacer(modifier = Modifier.weight(0.7f))
 
         // Board
         BoardView(
@@ -105,7 +106,7 @@ fun GameScreenContent(
         )
 
         // Small spacer between board and buttons — keeps them close
-        Spacer(modifier = Modifier.weight(0.6f))
+        Spacer(modifier = Modifier.weight(0.8f))
 
         // Controls
         ControlsView(
@@ -114,7 +115,7 @@ fun GameScreenContent(
             modifier = Modifier.fillMaxWidth()
         )
 
-        Spacer(modifier = Modifier.height(24.dp))
+        Spacer(modifier = Modifier.weight(0.5f))
     }
 
     // Winner dialog — shown on top when game ends
